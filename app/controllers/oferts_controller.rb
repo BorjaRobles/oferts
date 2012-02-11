@@ -1,9 +1,8 @@
 require "open-uri"
 class OfertsController < ApplicationController
-  before_filter :find_oferts, :only => [:index]
-  
+  before_filter :find_oferts_groupalia, :only => [:index]
   def index
-    @oferta = Ofert.all
+    @oferta = Ofert.all    
   end 
   
 
@@ -14,10 +13,9 @@ class OfertsController < ApplicationController
   end
   
   private
-    def find_oferts
+    def find_oferts_groupalia
       #Find offerts in barcelona 
-      doc = Nokogiri::HTML(open('http://es.groupalia.com/descuentos-barcelona/'))
-      
+      doc = Nokogiri::HTML(open('http://es.groupalia.com/descuentos-barcelona/'))      
       doc.css('div.home_deal').each do |div|
         #por cada oferta encontrada se crea un objeto y se guarda en la BD
         #comprueba que las ofertas no se repiten !!!
@@ -26,26 +24,70 @@ class OfertsController < ApplicationController
           duplicado = Ofert.where(:title =>titulo.content )
           duplicado.destroy_all
           @oferta.title = titulo.content
-        end
-        
+        end        
         div.css('div.final_price_multi').each do |price|
           precio = price.content.gsub(",",".")
           @oferta.price = precio.to_f
         end
-
         div.css('div.subtitle_multi').each do |description|
           @oferta.description  = description.content 
         end
-
         div.css('img.image').each do |imagen|
           @oferta.image  = imagen.attributes["src"].value
         end
-
         div.css('a.sprite_icons').each do |link|
           @oferta.link  = link.attributes["href"].value
-        end             
-        
+        end        
         @oferta.save             
+      end     
+   
+      doc = Nokogiri::HTML(open('http://www.groupon.es/deals/barcelona'))      
+      @oferta =  Ofert.new
+      titulo = doc.css('h1 a').text
+      titulo = titulo.slice(0,110) + "..."
+      descripcion = doc.css('h1 a').text
+      
+      duplicado = Ofert.where(:title => titulo )
+      duplicado.destroy_all
+      doc.css('button img').each do |imagen|
+        @oferta.image = imagen.attributes["src"].value
       end
+      @oferta.title = titulo
+      imagen = doc.css('span.price span.noWrap').text
+      @oferta.price = imagen.gsub(",",".").gsub(" ","").gsub("\u20AC","").to_f
+      @oferta.link  = "http://www.groupon.es/deals/barcelona"
+      @oferta.description = descripcion
+      @oferta.save
+      
+      doc.css("div.extraDealMulti").each do |div|
+        @oferta =  Ofert.new
+        titulo = div.css("a").text
+        titulo = titulo.slice(0,110) + "..."        
+        duplicado = Ofert.where(:title =>titulo)
+        duplicado.destroy_all
+        @oferta.title = titulo        
+        div.css("div.extraDealImage img").each do |imagen|
+          @oferta.image = imagen.attributes["src"].value
+        end        
+        descripcion = div.css("a").text
+        @oferta.description = descripcion        
+        div.css("div.extraDealView a").each do |link|
+          @oferta.link = link.attributes["href"].value
+        end
+        @oferta.save        
+      end
+      
+      doc1 = Nokogiri::HTML(open('http://www.groupon.es/missed-deals/barcelona'))
+        
+        
+        a = doc1.css("div.recentDeal")
+        @b = []
+        a.each do |deal|
+        @oferta = Ofert.new
+         @b << deal.css("div.recentDealDescription a").text
+         @oferta.description = deal.css("div.recentDealDescription a").text
+         @oferta.save
+        end
     end
+    
 end
