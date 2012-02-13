@@ -1,11 +1,10 @@
-require "open-uri"
 class OfertsController < ApplicationController
-  before_filter :find_oferts_groupalia, :only => [:index]
+  before_filter :find_oferts, :only => [:index]
+  
   def index
     @oferta = Ofert.all    
   end 
   
-
   def show
   end
 
@@ -13,122 +12,63 @@ class OfertsController < ApplicationController
   end
   
   private
-    def find_oferts_groupalia
-      #Find offerts in barcelona 
-      doc = Nokogiri::HTML(open('http://es.groupalia.com/descuentos-barcelona/'))      
-      doc.css('div.home_deal').each do |div|
-        #por cada oferta encontrada se crea un objeto y se guarda en la BD
-        #comprueba que las ofertas no se repiten !!!
-        @oferta = Ofert.new
-        div.css('a.title_multi').each do |titulo|
-          duplicado = Ofert.where(:title =>titulo.content )
-          duplicado.destroy_all
-          @oferta.title = titulo.content
-        end        
-        div.css('div.final_price_multi').each do |price|
-          precio = price.content.gsub(",",".")
-          @oferta.price = precio.to_f
-        end
-         div.css('a.sprite_icons').each do |link|
-            @oferta.link  = link.attributes["href"].value
-          end
-          
-        div.css('div.subtitle_multi').each do |description| 
-          @oferta.description  = description.content 
-        end
-        div.css('img.image').each do |imagen|
-          @oferta.image  = imagen.attributes["src"].value
-        end
-              
-        @oferta.save             
-      end     
-   
-      doc = Nokogiri::HTML(open('http://www.groupon.es/deals/barcelona'))      
+    def find_oferts  
+      doc = get_url('http://es.groupalia.com/descuentos-barcelona/')
+      get_array(doc,'div.home_deal').each do |ofert|       
+        @ofert = Ofert.new
+        get_title(@ofert,ofert,'a.title_multi')
+        get_price(@ofert,ofert,'div.final_price_multi')
+        get_link(@ofert,ofert,'a.sprite_icons')
+        get_description(@ofert,ofert,'div.subtitle_multi')
+        get_image(@ofert,ofert,'img.image')
+        @ofert.save
+      end
+      
+      doc = get_url('http://www.groupon.es/deals/barcelona')
       @oferta =  Ofert.new
-      titulo = doc.css('h1 a').text
-      titulo = titulo.slice(0,110) + "..."
-      descripcion = doc.css('h1 a').text
-      
-      duplicado = Ofert.where(:title => titulo )
-      duplicado.destroy_all
-      doc.css('button img').each do |imagen|
-        @oferta.image = imagen.attributes["src"].value
-      end
-      @oferta.title = titulo
-      imagen = doc.css('span.price span.noWrap').text
-      @oferta.price = imagen.gsub(",",".").gsub(" ","").gsub("\u20AC","").to_f
-      @oferta.link  = "http://www.groupon.es/deals/barcelona"
-      @oferta.description = descripcion
+      get_title(@oferta,doc,'h1 a',true)
+      get_description(@oferta,doc,'h1 a')
+      get_image(@oferta,doc,'button img')
+      get_price(@oferta,doc,'span.price span.noWrap')
+      @oferta.link  = "http://www.groupon.es/deals/barcelona"     
       @oferta.save
+           
+      doc.css("div.extraDealMulti").each do |ofert|  
+        @ofert =  Ofert.new        
+        get_title(@ofert,ofert,"h3",true,125)
+        get_price(@ofert,ofert,'div.price')
+        get_link(@ofert,ofert,"div.extraDealView a")
+        get_description(@ofert,ofert,"h3")
+        get_image(@ofert,ofert,"div.extraDealImage img")
+        @ofert.save        
+      end      
       
-      doc.css("div.extraDealMulti").each do |div|
-        @oferta =  Ofert.new
-        titulo = div.css("a").text
-        titulo = titulo.slice(0,110) + "..."        
-        duplicado = Ofert.where(:title =>titulo)
-        duplicado.destroy_all
-        @oferta.title = titulo        
-        div.css("div.extraDealImage img").each do |imagen|
-          @oferta.image = imagen.attributes["src"].value
-        end        
-        descripcion = div.css("a").text
-        @oferta.description = descripcion        
-        div.css("div.extraDealView a").each do |link|
-          @oferta.link = link.attributes["href"].value
+      doc = get_url("http://www.groupon.es/missed-deals/barcelona")
+      doc.css("div.recentDeal").each do |ofert|              
+        @ofert = Ofert.new
+        get_link(@ofert,ofert,"div.recentDealImage a")
+        get_price(@ofert,ofert,"span.priceValue")
+        oferta = get_url(@ofert.link)         
+        oferta.css("div.boxSoldoutDeal").each do |ofert|
+          get_description(@ofert,ofert,'span.teaser')
+          get_title(@ofert,ofert,"span.teaser b",true)
+          get_image(@ofert,ofert,"span.image img")          
         end
-        @oferta.save        
-      end
+        @ofert.save
+      end      
       
-      a = Mechanize.new
-      oferta = a.get("http://www.groupon.es/missed-deals/barcelona").search(".//div[@class='recentDeal']")
-      oferta.each do |ofert|
-        @oferta = Ofert.new
-          encontrar_link(@oferta,ofert,"div.recentDealImage a")
-          #prueba_descripcion(@oferta,@oferta.link,ofert)
-                
-          try1 = Mechanize.new
-          oferta = try1.get(@oferta.link).search(".//div[@class='boxSoldoutDeal']")
-          @oferta.description = oferta.css("span.teaser").text        
-          encontrar_titulo(@oferta,ofert,"div.recentDealDescription",true,103)
-          #encontrar_descripcion(@oferta,ofert,"div.recentDealDescription") contentBoxNormalLeft
-          encontrar_imagen(@oferta,ofert,"div.recentDealImage img.right")          
-          encontrar_precio(@oferta,ofert,"span.priceValue")
-        @oferta.save
-      end
-      
-      doc = Nokogiri::HTML(open('http://es.letsbonus.com/barcelona'))    
+      doc = get_url('http://es.letsbonus.com/barcelona')
       contador = 1
-        while contador < 19 do
-            @oferta = Ofert.new
-            div = doc.css("div#offer#{contador}")
-            
-            div.css('h3.frontTitle a').each do |titulo|
-              duplicado = Ofert.where(:title =>titulo.content )
-              duplicado.destroy_all
-              @oferta.title = titulo.content
-            end        
-            div.css('span.value').each do |price|
-              precio = price.content.gsub(",",".")
-              @oferta.price = precio.to_f
-            end
-             div.css('h3.frontTitle a').each do |link|
-                @oferta.link  = link.attributes["href"].value
-              end
-
-            div.css('div.text').each do |description| 
-              @oferta.description  = description.content 
-            end
-            div.css('div.product img').each do |imagen|
-              @oferta.image  = imagen.attributes["src"].value
-            end
-            @oferta.save
-            contador += 1
-          end
-     
-        
-        
-        
-     
-    end
-    
-end
+      while contador < 19 do
+        @ofert = Ofert.new
+        ofert = doc.css("div#offer#{contador}")
+        get_title(@ofert,ofert,'h3.frontTitle a')
+        get_price(@ofert,ofert,'span.value')
+        get_link(@ofert,ofert,'h3.frontTitle a')
+        get_description(@ofert,ofert,'div.text')
+        get_image(@ofert,ofert,'div.product img')
+        @ofert.save
+        contador += 1
+      end     
+    end    
+end    
