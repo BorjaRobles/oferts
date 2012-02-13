@@ -29,15 +29,17 @@ class OfertsController < ApplicationController
           precio = price.content.gsub(",",".")
           @oferta.price = precio.to_f
         end
-        div.css('div.subtitle_multi').each do |description|
+         div.css('a.sprite_icons').each do |link|
+            @oferta.link  = link.attributes["href"].value
+          end
+          
+        div.css('div.subtitle_multi').each do |description| 
           @oferta.description  = description.content 
         end
         div.css('img.image').each do |imagen|
           @oferta.image  = imagen.attributes["src"].value
         end
-        div.css('a.sprite_icons').each do |link|
-          @oferta.link  = link.attributes["href"].value
-        end        
+              
         @oferta.save             
       end     
    
@@ -77,17 +79,56 @@ class OfertsController < ApplicationController
         @oferta.save        
       end
       
-      doc1 = Nokogiri::HTML(open('http://www.groupon.es/missed-deals/barcelona'))
-        
-        
-        a = doc1.css("div.recentDeal")
-        @b = []
-        a.each do |deal|
+      a = Mechanize.new
+      oferta = a.get("http://www.groupon.es/missed-deals/barcelona").search(".//div[@class='recentDeal']")
+      oferta.each do |ofert|
         @oferta = Ofert.new
-         @b << deal.css("div.recentDealDescription a").text
-         @oferta.description = deal.css("div.recentDealDescription a").text
-         @oferta.save
-        end
+          encontrar_link(@oferta,ofert,"div.recentDealImage a")
+          #prueba_descripcion(@oferta,@oferta.link,ofert)
+                
+          try1 = Mechanize.new
+          oferta = try1.get(@oferta.link).search(".//div[@class='boxSoldoutDeal']")
+          @oferta.description = oferta.css("span.teaser").text        
+          encontrar_titulo(@oferta,ofert,"div.recentDealDescription",true,103)
+          #encontrar_descripcion(@oferta,ofert,"div.recentDealDescription") contentBoxNormalLeft
+          encontrar_imagen(@oferta,ofert,"div.recentDealImage img.right")          
+          encontrar_precio(@oferta,ofert,"span.priceValue")
+        @oferta.save
+      end
+      
+      doc = Nokogiri::HTML(open('http://es.letsbonus.com/barcelona'))    
+      contador = 1
+        while contador < 19 do
+            @oferta = Ofert.new
+            div = doc.css("div#offer#{contador}")
+            
+            div.css('h3.frontTitle a').each do |titulo|
+              duplicado = Ofert.where(:title =>titulo.content )
+              duplicado.destroy_all
+              @oferta.title = titulo.content
+            end        
+            div.css('span.value').each do |price|
+              precio = price.content.gsub(",",".")
+              @oferta.price = precio.to_f
+            end
+             div.css('h3.frontTitle a').each do |link|
+                @oferta.link  = link.attributes["href"].value
+              end
+
+            div.css('div.text').each do |description| 
+              @oferta.description  = description.content 
+            end
+            div.css('div.product img').each do |imagen|
+              @oferta.image  = imagen.attributes["src"].value
+            end
+            @oferta.save
+            contador += 1
+          end
+     
+        
+        
+        
+     
     end
     
 end

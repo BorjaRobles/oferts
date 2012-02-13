@@ -1,2 +1,2 @@
-class Ofert < ActiveRecord::Base
+class Ofert < ActiveRecord::Base  
 end
