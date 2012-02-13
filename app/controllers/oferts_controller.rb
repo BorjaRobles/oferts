@@ -1,3 +1,4 @@
+require "open-uri"
 class OfertsController < ApplicationController
   before_filter :find_oferts, :only => [:index]
   
@@ -14,7 +15,7 @@ class OfertsController < ApplicationController
   private
     def find_oferts  
       doc = get_url('http://es.groupalia.com/descuentos-barcelona/')
-      get_array(doc,'div.home_deal').each do |ofert|       
+      get_array(doc,'div.home_deal').each do |ofert|
         @ofert = Ofert.new
         get_title(@ofert,ofert,'a.title_multi')
         get_price(@ofert,ofert,'div.final_price_multi')
