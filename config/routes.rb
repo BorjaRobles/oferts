@@ -1,7 +1,10 @@
 Oferts::Application.routes.draw do
-  get "oferts/index"
-  get "oferts/show"
-  get "oferts/find"
+  get "home/index"
   
-  root :to => 'oferts#index'
+  namespace :ofert do
+    get "all"=> "cupons#index", :as=> "all"
+  end
+
+  
+  root :to => 'home#index'
 end

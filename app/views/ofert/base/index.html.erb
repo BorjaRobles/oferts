@@ -1,0 +1,8 @@
+<% @oferta.each do |ofert| %>
+  <%= image_tag ofert.image, :alt=>'Imagen cupon', :title=>ofert.title, :size=>"150x150" %>
+  <%= ofert.title %> - <%= ofert.price %> Euros<br>
+  <%= ofert.description %><br>
+  <%= ofert.link %><br><br>
+<% end %>
+
+

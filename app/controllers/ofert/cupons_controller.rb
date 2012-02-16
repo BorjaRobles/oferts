@@ -1,5 +1,5 @@
 require "open-uri"
-class OfertsController < ApplicationController
+class Ofert::CuponsController < Ofert::BaseController
   before_filter :clear, :only =>[:index]
   before_filter :find_jobs, :only =>[:index]
   
