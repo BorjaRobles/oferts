@@ -2,7 +2,16 @@ require "open-uri"
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  private
+  private  
+    def check_time
+      last_created = Ofert.last
+      if last_created
+        true if Time.now > Ofert.last.created_at + 1.day
+      else
+        true
+      end
+    end
+  
     def get_url(web)
       Nokogiri::HTML(open(web))
     end
@@ -36,7 +45,7 @@ class ApplicationController < ActionController::Base
       ref.css(data).each do |link|
          objeto.link=link.attributes["href"].value
       end
-    end  
+    end
     
     def get_description(objeto,ref,data)
       ref.css(data).each do |description| 

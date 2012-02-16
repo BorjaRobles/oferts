@@ -1,8 +1,16 @@
 require "open-uri"
 class OfertsController < ApplicationController
-  before_filter :find_oferts, :only => [:index]
+  before_filter :clear, :only =>[:index]
+  before_filter :find_jobs, :only =>[:index]
   
   def index
+   if check_time == true
+      ofertas = Ofert.all
+      ofertas.each do |oferta|
+        oferta.destroy
+      end 
+      find_oferts
+    end
     @oferta = Ofert.all    
   end 
   
@@ -13,6 +21,32 @@ class OfertsController < ApplicationController
   end
   
   private
+  
+    def find_jobs
+     # palabras = params[:palabras]..gsub(" ","- ")
+    #  web = "www.infojobs.net/ofertas-trabajo/#{palabras}/#{provincia}"
+    a = Mechanize.new
+    
+    a.user_agent = 'Mac Safari'
+    ofertas = a.get("http://www.infojobs.net/ofertas-trabajo/rails/barcelona").search("td.vacant a")    
+    @ofert1 = []   
+    ofertas.each do |aa|
+       #puts aa.text
+       @ofert1 << aa.text
+     web = "http:"+ aa.attributes["href"].value
+     #puts web
+     @ofert1 << web
+     agent = Mechanize.new
+     agent.user_agent = 'Mac Safari'    
+     ofert = a.get(web).search("td#prefijoExpMin").text     
+     #puts ofert
+     @ofert1 << ofert
+   end 
+      
+   end
+    
+  
+  
     def find_oferts  
       doc = get_url('http://es.groupalia.com/descuentos-barcelona/')
       get_array(doc,'div.home_deal').each do |ofert|
@@ -52,7 +86,7 @@ class OfertsController < ApplicationController
         oferta = get_url(@ofert.link)         
         oferta.css("div.boxSoldoutDeal").each do |ofert|
           get_description(@ofert,ofert,'span.teaser')
-          get_title(@ofert,ofert,"span.teaser b",true)
+          get_title(@ofert,ofert,"span.title",true)
           get_image(@ofert,ofert,"span.image img")          
         end
         @ofert.save
@@ -60,7 +94,7 @@ class OfertsController < ApplicationController
       
       doc = get_url('http://es.letsbonus.com/barcelona')
       contador = 1
-      while contador < 19 do
+      while contador < 19 do         
         @ofert = Ofert.new
         ofert = doc.css("div#offer#{contador}")
         get_title(@ofert,ofert,'h3.frontTitle a')
@@ -70,6 +104,18 @@ class OfertsController < ApplicationController
         get_image(@ofert,ofert,'div.product img')
         @ofert.save
         contador += 1
-      end     
-    end    
+      end           
+    end
+    
+    def clear
+      nopermitidos = ["castelldefels","manresa","sitges",
+                      "terrassa","badalona","sabadell",
+                      "mataro","hospitalet","granollers",
+                      "cornella","sant-cugat-del-valles,
+                      santa-coloma-de-gramenet"]
+      nopermitidos.each do |eliminar|
+         ofert = Ofert.find_by_link("http://es.letsbonus.com/#{eliminar}")
+         ofert.destroy if ofert
+      end
+    end
 end    
