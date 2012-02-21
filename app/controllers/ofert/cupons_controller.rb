@@ -1,7 +1,5 @@
-require "open-uri"
 class Ofert::CuponsController < Ofert::BaseController
   before_filter :clear, :only =>[:index]
-  before_filter :find_jobs, :only =>[:index]
   
   def index
    if check_time == true
@@ -20,33 +18,7 @@ class Ofert::CuponsController < Ofert::BaseController
   def find
   end
   
-  private
-  
-    def find_jobs
-     # palabras = params[:palabras]..gsub(" ","- ")
-    #  web = "www.infojobs.net/ofertas-trabajo/#{palabras}/#{provincia}"
-    a = Mechanize.new
-    
-    a.user_agent = 'Mac Safari'
-    ofertas = a.get("http://www.infojobs.net/ofertas-trabajo/rails/barcelona").search("td.vacant a")    
-    @ofert1 = []   
-    ofertas.each do |aa|
-       #puts aa.text
-       @ofert1 << aa.text
-     web = "http:"+ aa.attributes["href"].value
-     #puts web
-     @ofert1 << web
-     agent = Mechanize.new
-     agent.user_agent = 'Mac Safari'    
-     ofert = a.get(web).search("td#prefijoExpMin").text     
-     #puts ofert
-     @ofert1 << ofert
-   end 
-      
-   end
-    
-  
-  
+  private  
     def find_oferts  
       doc = get_url('http://es.groupalia.com/descuentos-barcelona/')
       get_array(doc,'div.home_deal').each do |ofert|

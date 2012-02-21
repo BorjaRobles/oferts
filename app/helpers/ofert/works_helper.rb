@@ -1,0 +1,2 @@
+module Ofert::WorksHelper
+end
