@@ -19,3 +19,4 @@ end
 gem 'mechanize'
 gem 'nokogiri'
 gem 'will_paginate'
+gem 'heroku'
