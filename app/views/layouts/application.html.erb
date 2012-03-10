@@ -3,11 +3,51 @@
 <head>
   <title>Oferts</title>
   <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "raphael.js" %>
+  <%= javascript_include_tag "popup.js" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "analytics.js" %>
+  <%= javascript_include_tag "jquery.hoverIntent.js" %>
+  <%= javascript_include_tag "efect.js" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <div class="container_12">
+  <div class="grid_12">
+     <div class="grid_12">
+      <br><br>
+       <div class="grid_2">
+         <%= image_tag 'rails.png' %>
+       </div>     
+       <div class="grid_2">
+         <div class="grid_2">
+           <%= link_to image_tag("welcome.gif", :size=> "150x150", :title=>"Bienvenida", :border=>0, :id=>'bienvenido'), root_path %>
+         </div>       
+         <div class="grid_2 color1 round norm2" id="welcome_text" style="display:none;">
+           <%= render 'home/welcome' %>
+         </div> 
+       </div>
+
+       <div class="grid_2">
+         <div class="grid_2">
+           <%= link_to image_tag("buscador.gif", :size=> "150x150", :title=>"Buscador", :border=>0, :id=>'buscador'), ofert_trabajos_path %>
+         </div>       
+         <div class="grid_2 round color1 norm2" id="buscador_text"  style="display:none;">
+           <%= render 'home/buscador' %>
+         </div>
+       </div>
+
+       <div class="grid_2">
+         <div class="grid_2">
+           <%= image_tag("curriculum.gif", :size=> "150x150", :title=>"curriculum", :border=>0, :id=>'curriculum' ) %>
+         </div>       
+         <div class="grid_2 round color1 norm2" id="curriculum_text"  style="display:none">
+          <%= render 'home/curriculum' %>
+         </div>
+       </div>    
+     </div>
+  </div>
+  <div class="grid_12"><hr></div>  
   <%= yield %>
 </div>
 </body>

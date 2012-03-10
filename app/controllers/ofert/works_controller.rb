@@ -8,7 +8,7 @@ class Ofert::WorksController < ApplicationController
       get_works(params[:province].to_i)
     end    
     @jobs = Job.all
-    @jobs = @jobs.paginate(:page => params[:page], :per_page => 15)
+    @jobs = @jobs.paginate(:page => params[:page], :per_page => 16)
   end
 
   private    

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>  
+<head>
+  <title>Efectos</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "raphael.js"%>
+  <%= javascript_include_tag "popup.js"%>  
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "analytics.js" %>
+  <%= javascript_include_tag "jquery.hoverIntent.js"%>
+  <%= javascript_include_tag "efect.js" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container_12">
+<%= yield %>
+</div>
+</body>
+</html>

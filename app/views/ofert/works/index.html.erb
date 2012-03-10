@@ -1,32 +1,56 @@
-<h2> Formulario de busqueda de empleo  </h2>
-<%= form_tag("trabajos", :method=> "get") do %>
-  <%= label_tag(:words,"Palabras clave") %>
-  <%= text_field_tag :words %><br>
-  <%= label_tag(:province,"Provincia") %>
-  <%= select_tag(:province,options_for_select([['Todos', 0], ["A Coruna", 1],["Alava",2],
-                                                  ["Albacete",3], ["Alicante",4], ["Almeria",5],
-                                                  ["Asturias",6], ["Avila",7], ["Badajoz",8],
-                                                  ["Baleares",9], ["Barcelona",10], ["Bizkaia",11],
-                                                  ["Burgos",12], ["Caceres",13], ["Cadiz",14],
-                                                  ["Cantabria",15], ["Castellon",16],["Ceuta",17],
-                                                  ["Ciudad Real",18], ["Cordoba",19],["Cuenca",20],
-                                                  ["Gipuzkoa",21],["Girona",22],["Granada",23],
-                                                  ["Guadalajara",24],["Huelva",25],["Huesca",26],
-                                                  ["Jaen",27],["La Rioja",28],["Las Palmas",29],
-                                                  ["Leon",30],["Lleida",31],["Lugo",32],
-                                                  ["Madrid",33],["Malaga",34],["Melilla",35],
-                                                  ["Murcia", 36],["Navarra",37],["Ourense",38],
-                                                  ["Palencia",39],["Pontevedra",40],["Salamanca",41],
-                                                  ["Segovia",42],["Sevilla",43],["Soria",44],
-                                                  ["Sta. Cruz de Tenerife",45],["Tarragona",46],["Teruel",47],
-                                                  ["Toledo",48],["Valencia",49],["Valladolid",50],["Zamora",51],
-                                                  ["Zaragoza",52]]))%><br>
-  <%= submit_tag "Buscar" %>
+<div class='grid_12 pastilla2 round'>
+  <div class='grid_4 push_3 espi'>
+    <h2> Buscador de empleo </h2>
+    <%= form_tag("trabajos", :method=> "get") do %>
+      <%= label_tag(:words,"Palabras clave") %>
+      <%= text_field_tag :words %><br>
+      <%= label_tag(:province,"Provincia") %>
+      <%= select_tag(:province,options_for_select([['Todos', 0], ["A Coruna", 1],["Alava",2],
+                                                      ["Albacete",3], ["Alicante",4], ["Almeria",5],
+                                                      ["Asturias",6], ["Avila",7], ["Badajoz",8],
+                                                      ["Baleares",9], ["Barcelona",10], ["Bizkaia",11],
+                                                      ["Burgos",12], ["Caceres",13], ["Cadiz",14],
+                                                      ["Cantabria",15], ["Castellon",16],["Ceuta",17],
+                                                      ["Ciudad Real",18], ["Cordoba",19],["Cuenca",20],
+                                                      ["Gipuzkoa",21],["Girona",22],["Granada",23],
+                                                      ["Guadalajara",24],["Huelva",25],["Huesca",26],
+                                                      ["Jaen",27],["La Rioja",28],["Las Palmas",29],
+                                                      ["Leon",30],["Lleida",31],["Lugo",32],
+                                                      ["Madrid",33],["Malaga",34],["Melilla",35],
+                                                      ["Murcia", 36],["Navarra",37],["Ourense",38],
+                                                      ["Palencia",39],["Pontevedra",40],["Salamanca",41],
+                                                      ["Segovia",42],["Sevilla",43],["Soria",44],
+                                                      ["Sta. Cruz de Tenerife",45],["Tarragona",46],["Teruel",47],
+                                                      ["Toledo",48],["Valencia",49],["Valladolid",50],["Zamora",51],
+                                                      ["Zaragoza",52]]))%><br>
+      <%= submit_tag "Buscar" %>
+    <% end %>
+  </div>
+  <div class="grid_4 push_2">
+    <%= image_tag('perribusca.gif', :size=>"250x150")%>
+  </div>
+</div>    
+
+<% if !@jobs.empty? %>
+<div class="grid_12"><hr></div>
+<div class='grid_12 fondoofertas'>
+  <% @jobs.each do |job| %>
+    <div class='grid_3 posit sombra esp2 omega'>
+      <div class='grid_3'>
+        <%= image_tag("#{randimage}")%>
+      </div>
+      <div class='grid_3 culu'>      
+        <p><%= truncate(job.title) %></p><br>
+        <%= link_to "apuntarse a la oferta", job.link %><br><br>
+      </div>
+    </div>  
+  <% end %>
+    
+  <div class="grid_9 push_1 esp3 paginado round">      
+    <%= will_paginate @jobs %>
+  </div>
+</div>
 <% end %>
 
-<% @jobs.each do |job| %>
-  <%= job.title %><br>
-  <%= link_to "apuntarse a la oferta", job.link %><br><br>
-<% end %>  
-
- <%= will_paginate @jobs %></br>  
+              
+  

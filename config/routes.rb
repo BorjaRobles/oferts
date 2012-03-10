@@ -1,10 +1,7 @@
-Oferts::Application.routes.draw do
-  get "works/index"
-  get "home/index"
-  
+Oferts::Application.routes.draw do  
   namespace :ofert do
     get "all"=> "cupons#index", :as=> "all"
-    get "/trabajos"=> "works#index"
+    get "/trabajos"=> "works#index", :as=> "trabajos"
     post "/trabajos"=> "works#index"
   end  
   root :to => 'home#index'
