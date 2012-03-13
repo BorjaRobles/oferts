@@ -15,10 +15,10 @@ gem 'jquery-rails'
 
 group :test do
   gem 'turn', :require => false
+  gem 'shoulda'
 end
 
 gem 'mechanize'
 gem 'nokogiri'
 gem 'will_paginate'
 gem 'heroku'
-gem 'therubyracer'

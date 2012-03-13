@@ -27,7 +27,7 @@ class Ofert::BaseController < ApplicationController
            duplicado = Ofert.where(:title =>titulo.content )
            duplicado.destroy_all        
            objeto.title = titulo.content
-         elsif slice== true
+         elsif slice == true
            duplicado = Ofert.where(:title =>titulo.content.slice(0,max))
            duplicado.destroy_all
            objeto.title = titulo.content.slice(0,max)
@@ -59,6 +59,5 @@ class Ofert::BaseController < ApplicationController
          objeto.image = imagen.attributes["src"].value
        end
      end
-
 end
 
