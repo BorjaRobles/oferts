@@ -23,3 +23,4 @@ gem 'nokogiri'
 gem 'will_paginate'
 gem 'heroku'
 gem "execjs"
+gem 'therubyracer-heroku'
