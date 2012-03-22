@@ -1,183 +1,111 @@
-<%= javascript_include_tag "jquery.tools.min.js"%>
 <%= stylesheet_link_tag "slider" %>
 
 <div class="grid_12 round">
-   <div class='grid_6 omega'>
-<%= javascript_include_tag "jquery.tools.min.js"%>
-<%= stylesheet_link_tag "slider" %>
- 
-
-<div id="scroll">
-
-  <!-- scrollable items -->
-  <div id="tools">
-
-    <!-- empty slot -->
-    <div class="tool">&nbsp;</div>
-
-    <!-- tabs -->
-    <div class="tool">
-
-     <img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"
-   src="/assets/diferencia.gif"/></a>
-
-      <div class="details">
-  <strong>¿Porque?</strong> ,nosotros te ofrecemos una busqueda de empleo limpia,
-        no tenemos comision con nadie, asi que realmente te ofrecesmos las ofertas que hay
+  <div class="grid_12 round">
+    <div id="scroll">
+      <div id="tools">
+        <div class="tool">&nbsp;</div>
+          <div class="tool">
+            <img style="margin:-17px 0 28px 0" width="721" height="346"
+            alt="jQuery Tools. The ultimate UI library for web"
+            src="/assets/diferencia.gif"/></a>
+            <div class="details">
+              <strong>¿Porque?</strong> ,nosotros te ofrecemos una busqueda de empleo limpia,
+              no tenemos comision con nadie, asi que realmente te ofrecesmos las ofertas que hay
+            </div>
+          </div>
+          <div class="tool">
+            <img style="margin:-17px 0 28px 0" width="721" height="346"
+            alt="jQuery Tools. The ultimate UI library for web"
+            src="/assets/porque.gif"/>
+            <div class="details">
+              <strong>Buscamos</strong> por ti en diferentes sitios de la misma forma que tu lo harias
+              ,simplemente nosotros buscamos en todos ellos a la vez, de esta forma te ahorramos
+              mucho tiempo.
+            </div>
+          </div>
+          <div class="tool">
+            <img style="margin:-17px 0 28px 0" width="721" height="346"
+            alt="jQuery Tools. The ultimate UI library for web"
+            src="/assets/partido.gif"/>
+            <div class="details">
+              <strong>Adelantate</strong> a tus competidores, encontrando ofertas de trabajo
+              antes que ellos con nuestro sistema, revisa los apartados de curriculums, cartas de presentacion
+              y promoción.
+            </div>
+          </div>
+          <div class="tool">
+            <img style="margin:-17px 0 28px 0" width="721" height="346"
+            alt="jQuery Tools. The ultimate UI library for web"
+            src="/assets/promocion.gif"/>
+            <div class="details">
+              <strong>Promocionate</strong> aprende a darte a conocer y ha hacerte oir, tarde o temprano
+              alguan puerta se abrira.
+            </div>
+          </div>
+          <div class="tool">
+            <img style="margin:-17px 0 28px 0" width="721" height="346"
+            alt="jQuery Tools. The ultimate UI library for web"
+            src="/assets/curricu.gif"/>
+            <div class="details">
+              <strong>Mejora</strong> tu curriculum con nuestros consejos, aprende a optimiarlo para realzar tus
+              mejores cualidades.
+            </div>
+          </div>
+          <div class="tool">
+            <img style="margin:-17px 0 28px 0" width="721" height="346"
+            alt="jQuery Tools. The ultimate UI library for web"      
+            src="/assets/carta.gif"/>
+            <div class="details">
+              <strong>Crea</strong> con nuestros consejos tu carta de presentacion perfecta, cada granito
+              cuenta para desequilibrar la balanza a tu favor.
+            </div>
+          </div>
+        </div>
+        <div id="intro" class="tool">
+          <img style="margin:-17px 0 28px 0" width="721" height="346"
+          alt="jQuery Tools. The ultimate UI library for web"
+          src="/assets/presentacion.gif" />
+          <div class="details">
+            <strong>OPORTUNIDAD</strong>, nuestro objetivo es darte uan oportunidad y convertir la
+            busqueda de empleo en un juego de niños.
+          </div>
+        </div>
+        <br clear="all" />
+        <div id="thumbs" class="t">
+          <a id="t0" class="active"></a>
+          <div class="navi">
+            <a style="display:none"></a>
+            <a id="t1"></a>
+            <a id="t2"></a>
+            <a id="t3"></a>
+            <a id="t4"></a>
+            <a id="t5"></a>
+            <a id="t6"></a>
+          </div>
+        </div>
       </div>
-
     </div>
-
-    <!-- tooltip -->
-    <div class="tool">
-
-     <img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"
-   src="/assets/porque.gif"/>
-
-      <div class="details">
-  <strong>Buscamos</strong> por ti en diferentes sitios de la misma forma que tu lo harias
-        ,simplemente nosotros buscamos en todos ellos a la vez, de esta forma te ahorramos
-        mucho tiempo.
-      </div>
-
-    </div>
-
-    <!-- overlay -->
-    <div class="tool">
-
-    <img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"
-   src="/assets/partido.gif"/>
-
-      <div class="details">
-  <strong>Adelantate</strong> a tus competidores, encontrando ofertas de trabajo
-        antes que ellos con nuestro sistema, revisa los apartados de curriculums, cartas de presentacion
-        y promoción.
-      </div>
-
-    </div>
-
-    <!-- scrollable -->
-    <div class="tool">
-
-      <<img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"
-   src="/assets/promocion.gif"/>
-
-      <div class="details">
-  <strong>Promocionate</strong> aprende a darte a conocer y ha hacerte oir, tarde o temprano
-        alguan puerta se abrira.
-      </div>
-
-    </div>
-
-    <!-- FORM -->
-    <div class="tool">
-
-      <img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"
-   src="/assets/curricu.gif"/>
-
-      <div class="details">
-  <strong>Mejora</strong> tu curriculum con nuestros consejos, aprende a optimiarlo para realzar tus
-        mejores cualidades.
-      </div>
-
-    </div>
-
-    <!-- toolbox -->
-    <div class="tool">
-        <img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"      
-  src="/assets/carta.gif"/>
-        
-      <div class="details">
-        <strong>Crea</strong> con nuestros consejos tu carta de presentacion perfecta, cada granito
-         cuenta para desequilibrar la balanza a tu favor.
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- intro "page" -->
-  <div id="intro" class="tool">
-
-    <img style="margin:-17px 0 28px 0" width="721" height="346"
-   alt="jQuery Tools. The ultimate UI library for web"
-   src="/assets/presentacion.gif" />
-
-    <div class="details">
-      <strong>OPORTUNIDAD</strong>, nuestro objetivo es darte uan oportunidad y convertir la
-      busqueda de empleo en un juego de niños.
-    </div>
-
-  </div>
-
-  <!-- required for IE6/IE7 -->
-  <br clear="all" />
-
-  <!-- thumbnails -->
-  <div id="thumbs" class="t">
-
-    <!-- intro page navi button -->
-    <a id="t0" class="active"></a>
-
-    <!-- scrollable navigator root element -->
-    <div class="navi">
-      <a style="display:none"></a>
-      <a id="t1"></a>
-      <a id="t2"></a>
-      <a id="t3"></a>
-      <a id="t4"></a>
-      <a id="t5"></a>
-      <a id="t6"></a>
-    </div>
-
-  </div>
-
-</div>
+  </div>   
+</div>  
 
 <script>
-  // initialize scrollable and return the programming API
   var api = $("#scroll").scrollable({
-  items: '#tools'
-
-  // use the navigator plugin
+    items: '#tools'
   }).navigator().data("scrollable");
 
-
-  // this callback does the special handling of our "intro page"
   api.onBeforeSeek(function(e, i) {
-
-  // when on the first item: hide the intro
-  if (i) {
-  $("#intro").fadeOut("slow");
-
-  // dirty hack for IE7-. cannot explain
-  if ($.browser.msie && $.browser.version < 8) {
-                          $("#intro").hide();
-                                }
-
-                                      // otherwise show the intro
-                                      } else {
-                                $("#intro").fadeIn(1000);
-                                      }
-
-                                      // toggle activity for the intro thumbnail
-                                      $("#t0").toggleClass("active", i == 0);
-                                            });
-
-                                            // a dedicated click event for the intro thumbnail
-                                            $("#t0").click(function() {
-
-                                      // seek to the beginning (the hidden first item)
-                                      $("#scroll").scrollable().begin();
-
-                                            });
-
+    if (i) {
+      $("#intro").fadeOut("slow");
+      if ($.browser.msie && $.browser.version < 8) {
+        $("#intro").hide();
+      }
+      } else {
+        $("#intro").fadeIn(1000);
+      }
+        $("#t0").toggleClass("active", i == 0);
+      });
+      $("#t0").click(function() {
+        $("#scroll").scrollable().begin();
+      });
 </script>
-</div>
-<div class="grid_12"><hr></div>
