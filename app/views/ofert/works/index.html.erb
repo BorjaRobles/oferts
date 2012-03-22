@@ -41,7 +41,7 @@
       </div>
       <div class='grid_3 culu'>      
         <p><%= truncate(job.title) %></p><br>
-        <%= link_to "apuntarse a la oferta", job.link %><br><br>
+        <%= link_to "apuntarse a la oferta", job.link, :target=>"_blank" %><br><br>
       </div>
     </div>  
   <% end %>

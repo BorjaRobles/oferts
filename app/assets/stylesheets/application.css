@@ -7,35 +7,44 @@
  *
  */
  
- .paginado {
-   background: #b0b57f;
-   border: 1px solid #e5e5e5;
-   text-align: center;
-   padding: 1em;
-   cursor: default; }
-   .paginado a, .paginado span {
-     padding: 0.2em 0.3em; }
-   .paginado .disabled {
-     color: black; }
-   .paginado .current {
-     font-style: normal;
-     font-weight: bold;
-     background-color: #bebebe;
-     display: inline-block;
-     width: 1.4em;
-     height: 1.4em;
-     line-height: 1.5;
-     -moz-border-radius: 1em;
-     -webkit-border-radius: 1em;
-     border-radius: 1em;
-     text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px; }
-   .paginado a {
-     text-decoration: none;
-     color: black; }
-     .paginado a:hover, .paginado a:focus {
-       text-decoration: underline; }
-  
-  
+.paginado {
+  background: #b0b57f;
+  border: 1px solid #e5e5e5;
+  text-align: center;
+  padding: 1em;
+  cursor: default;
+}
+
+.paginado a, .paginado span {
+  padding: 0.2em 0.3em;
+}
+
+.paginado .disabled {
+color: black;
+}
+
+.paginado .current {
+  font-style: normal;
+  font-weight: bold;
+  background-color: #bebebe;
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  line-height: 1.5;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+  text-shadow: rgba(255, 255, 255, 0.8) 1px 1px 1px;
+}
+
+.paginado a {
+  text-decoration: none;
+  color: black;
+}
+
+.paginado a:hover, .paginado a:focus {
+  text-decoration: underline;
+}
 
 .espi {
   margin-left: 1%;
@@ -55,9 +64,9 @@
 }
 
 .sombra {
--moz-box-shadow: 5px 5px rgba(0,0,0,0.5);
--webkit-box-shadow: 5px 5px rgba(0,0,0,0.5);
-box-shadow: 5px 5px rgba(0,0,0,0.5);
+  -moz-box-shadow: 5px 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 5px 5px rgba(0,0,0,0.5);
+  box-shadow: 5px 5px rgba(0,0,0,0.5);
 }
 
 hr {
@@ -74,68 +83,74 @@ hr {
 }
 
 .esp3 {
-     margin-left: 5px;
-     margin-right: 5px;
-     margin-top: 5px;
-     margin-bottom: 5px;    
+  margin-left:15px;
+  margin-right:15px;
+  margin-top:15px;
+  margin-bottom:15px;    
 }
 
-
-
 .esp2 {
-     margin-left: 3%;
-     margin-right: 3%;
-     margin-top: 3%;
-     margin-bottom: 3%;    
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;    
 }
 
 .espaciado {
-     margin-left: 8%;
-     margin-right: 8%;
-     margin-top: 8%;
-     margin-bottom: 8%;    
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 8%;
+  margin-bottom: 8%;    
 }
 
 .cimagen {
-
-     margin-top: 8%;
-     margin-bottom: 8%;    
+  margin-top: 8%;
+  margin-bottom: 8%;    
 }
 
 .centrada {
-margin-left: auto;
-margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pastilla {
-background:#858a57;
-min-height: 300px; 
+  background:#858a57;
+  min-height: 300px; 
 }
 
 .pastilla2 {
-background:#b0b57f;
+  background:#b0b57f;
 }
 
 .round {
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .color1 {
-    background: #f05709;
+  background: #edecbc;
 }
 
 .norm {
-    width:150px;
-    height:300px;    
+  width:150px;
+  height:300px;    
  }
  
- .norm2 {
-    min-width:150px;
- }
- 
- 
+.norm2 {
+  min-width:150px;
+}
+.chat {
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  border-radius: 30px;
+  margin-right: 30px;
+}
+
+.flecha1 {
+  margin-bottom:-18px;
+} 
+
  /*
 	Variable Grid System.
 	Learn more ~ http://www.spry-soft.com/grids/

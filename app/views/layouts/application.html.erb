@@ -22,7 +22,10 @@
          <div class="grid_2">
            <%= link_to image_tag("welcome.gif", :size=> "150x150", :title=>"Bienvenida", :border=>0, :id=>'bienvenido'), root_path %>
          </div>       
-         <div class="grid_2 color1 round norm2" id="welcome_text" style="display:none;">
+         <div class="grid_2 flecha1 push_1" id="welcome_text_arrow" style="display:none;">
+         <%= image_tag("arrow.gif", :border=>0 ) %>
+        </div>
+         <div class="grid_5 color1 norm2 chat" id="welcome_text" style="display:none;">
            <%= render 'home/welcome' %>
          </div> 
        </div>
@@ -31,7 +34,10 @@
          <div class="grid_2">
            <%= link_to image_tag("buscador.gif", :size=> "150x150", :title=>"Buscador", :border=>0, :id=>'buscador'), ofert_trabajos_path %>
          </div>       
-         <div class="grid_2 round color1 norm2" id="buscador_text"  style="display:none;">
+         <div class="grid_2 flecha1 push_1" id="busq_text_arrow" style="display:none;">
+         <%= image_tag("arrow.gif", :border=>0 ) %>
+        </div>
+         <div class="grid_5 round color1 chat" id="buscador_text"  style="display:none;">
            <%= render 'home/buscador' %>
          </div>
        </div>
@@ -40,7 +46,10 @@
          <div class="grid_2">
            <%= image_tag("curriculum.gif", :size=> "150x150", :title=>"curriculum", :border=>0, :id=>'curriculum' ) %>
          </div>       
-         <div class="grid_2 round color1 norm2" id="curriculum_text"  style="display:none">
+         <div class="grid_2 flecha1 push_1" id="curri_text_arrow" style="display:none;">
+         <%= image_tag("arrow.gif", :border=>0 ) %>
+        </div>
+         <div class="grid_5 round color1 chat" id="curriculum_text"  style="display:none">
           <%= render 'home/curriculum' %>
          </div>
        </div>    
